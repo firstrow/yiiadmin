@@ -52,7 +52,6 @@ class YiiadminModule extends CWebModule
      */
     public function getModelsList()
     {
-        //$models=YAdminConfig::$registerModels;
         $models=$this->registerModels;
     
         if (!empty($models))
@@ -96,7 +95,6 @@ class YiiadminModule extends CWebModule
      */
     protected function addModel($name)
     {
-        //if (!in_array($name,YAdminConfig::$excludeModels))
         if (!in_array($name,$this->excludeModels))
             $this->_modelsList[]=$name;
     }
@@ -235,9 +233,6 @@ class YiiadminModule extends CWebModule
     public function getModelNamePlural($model)
     {
         if (is_string($model))
-            return $model;
-
-        if (!get_class($model))
             $model=new $model;
 
         if (isset($model->adminName))
@@ -249,10 +244,7 @@ class YiiadminModule extends CWebModule
     public function getObjectPluralName($model, $pos=0)
     {
         if (is_string($model))
-            return $model;
-
-        if (!get_class($model))
-            $model=new $model;
+            $model=new $model; 
 
         if (!isset($model->pluralNames))
             return get_class($model);
