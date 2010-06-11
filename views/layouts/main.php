@@ -8,6 +8,7 @@ $cs->registerCssFile($baseUrl.'/css/base.css');
 <head> 
     <title>Yii Administration</title> 
     <meta name="robots" content="NONE,NOARCHIVE" /> 
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
 </head> 
 <body class="dashboard"> 
     <div id="container"> 
