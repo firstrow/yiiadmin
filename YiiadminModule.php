@@ -41,7 +41,7 @@ class YiiadminModule extends CWebModule
 		$this->setImport(array(
 			'yiiadmin.models.*',
 			'yiiadmin.components.*',
-            'zii.widgets.grid.CGridColumn'
+            'zii.widgets.grid.CGridColumn,'
 		));
 	}
 
@@ -71,7 +71,7 @@ class YiiadminModule extends CWebModule
                     {
                         foreach($files as $file)
                         {
-                           $class_name=str_replace(self::$fileExt,'',substr(strrchr($file, "/"), 1));
+                           $class_name=str_replace(self::$fileExt,'',substr(strrchr($file,DIRECTORY_SEPARATOR), 1));
                            $this->addModel($class_name);
                         }
                     }
