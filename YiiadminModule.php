@@ -12,14 +12,18 @@
  */
 class YiiadminModule extends CWebModule
 {
-    protected $model;
     public $attributesWidgets=null;
     public static $fileExt='.php';
-    private $controller;
     public $password;   
     public $registerModels=array();
     public $excludeModels=array();
+    public $behaviorName = 'yiiadmin';
+
     public $_modelsList=array();
+    
+    protected $model;
+    
+    private $controller;
     private $_assetsUrl;
 
     public function init()
@@ -111,6 +115,13 @@ class YiiadminModule extends CWebModule
     {
         $model=(string)$_GET['model_name'];
         $this->model=new $model;
+
+        if ($this->model->asa($this->behaviorName) === null)
+        {
+            $this->model->attachBehavior($this->behaviorName, array(
+                'class' => 'yiiadmin.behaviors.YiiadminModelBehavior'
+            ));
+        }
         return $this->model;
     }
 
@@ -131,7 +142,7 @@ class YiiadminModule extends CWebModule
             break;
 
             case 'dropDownList':
-                return $form->dropDownList($model,$attribute,$this->getAttributeChoices($attribute),array('empty'=>'- select -'));
+                return $form->dropDownList($model,$attribute, $model->asa($this->behaviorName)->getChoicesFor($attribute),array('empty'=>'- select -'));
             break;
 
             case 'calendar': 
@@ -271,6 +282,9 @@ class YiiadminModule extends CWebModule
         $this->_assetsUrl=$value;
     }
 
+    /**
+     * @todo
+     */
     public static function createActionUrl($action,$pk)
     {
         $a=new CController;
