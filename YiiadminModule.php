@@ -12,38 +12,38 @@
  */
 class YiiadminModule extends CWebModule
 {
-    private $_assetsUrl;
     protected $model;
     public $attributesWidgets=null;
-    public $_modelsList=array();
     public static $fileExt='.php';
     private $controller;
     public $password;   
     public $registerModels=array();
     public $excludeModels=array();
+    public $_modelsList=array();
+    private $_assetsUrl;
 
-	public function init()
-	{
+    public function init()
+    {
         error_reporting(E_ALL ^ E_NOTICE);
         Yii::app()->clientScript->registerCoreScript('jquery');
 
         Yii::app()->setComponents(array(
-			'errorHandler'=>array(
-				'errorAction'=>'yiiadmin/default/error',
-			),
-			'user'=>array(
-				'class'=>'CWebUser',
-				'stateKeyPrefix'=>'yiiadmin',
-				'loginUrl'=>Yii::app()->createUrl('yiiadmin/default/login'),
-			),
-		));
+            'errorHandler'=>array(
+                'errorAction'=>'yiiadmin/default/error',
+            ),
+            'user'=>array(
+                'class'=>'CWebUser',
+                'stateKeyPrefix'=>'yiiadmin',
+                'loginUrl'=>Yii::app()->createUrl('yiiadmin/default/login'),
+            ),
+        ));
 
-		$this->setImport(array(
-			'yiiadmin.models.*',
-			'yiiadmin.components.*',
+        $this->setImport(array(
+            'yiiadmin.models.*',
+            'yiiadmin.components.*',
             'zii.widgets.grid.CGridColumn',
-		));
-	}
+        ));
+    }
 
     /**
      * Получение списка моделей
@@ -253,23 +253,23 @@ class YiiadminModule extends CWebModule
             return $model->pluralNames[$pos];
     }
 
-	/**
-	 * @return string the base URL that contains all published asset files.
-	 */
-	public function getAssetsUrl()
-	{
-		if($this->_assetsUrl===null)
-			$this->_assetsUrl=Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('application.modules.yiiadmin.assets'));
-		return $this->_assetsUrl;
-	}
+    /**
+     * @return string the base URL that contains all published asset files.
+     */
+    public function getAssetsUrl()
+    {
+        if($this->_assetsUrl===null)
+            $this->_assetsUrl=Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('application.modules.yiiadmin.assets'));
+        return $this->_assetsUrl;
+    }
 
-	/**
-	 * @param string the base URL that contains all published asset files.
-	 */
-	public function setAssetsUrl($value)
-	{
-		$this->_assetsUrl=$value;
-	}
+    /**
+     * @param string the base URL that contains all published asset files.
+     */
+    public function setAssetsUrl($value)
+    {
+        $this->_assetsUrl=$value;
+    }
 
     public static function createActionUrl($action,$pk)
     {
@@ -282,22 +282,25 @@ class YiiadminModule extends CWebModule
         return Yii::t('YiiadminModule.yiiadmin',$message);
     }
 
-	public function beforeControllerAction($controller, $action)
-	{
-		if(parent::beforeControllerAction($controller, $action))
-		{
+    public function beforeControllerAction($controller, $action)
+    {
+        if (parent::beforeControllerAction($controller, $action))
+        {
             $this->controller=$controller;
-			$route=$controller->id.'/'.$action->id;
+            $route=$controller->id.'/'.$action->id;
 
-			$publicPages=array(
-				'default/login',
-				'default/error',
-			);
-			if($this->password!==false && Yii::app()->user->isGuest && !in_array($route,$publicPages))
-				Yii::app()->user->loginRequired();
-			else
-				return true;
-		}
-		return false;
-	}
-}
+            $publicPages=array(
+                'default/login',
+                'default/error',
+            );
+            if ($this->password!==false && Yii::app()->user->isGuest && !in_array($route,$publicPages))
+            {
+                Yii::app()->user->loginRequired();
+            } else {
+                return true;
+            }
+        }
+        return false;
+    }
+} 
+// vim: set filetype=php expandtab tabstop=4 shiftwidth=4 autoindent smartindent:

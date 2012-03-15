@@ -32,16 +32,20 @@ class ManageModelController extends YAdminController
         $model=$this->module->loadModel($model_name);
 
         if (isset($_GET[get_class($model)]))
+        {
             $model->attributes=$_GET[get_class($model)];
+        }
 
         $this->breadcrumbs=array(
                 $this->module->getModelNamePlural($model),
         );
 
         if (method_exists($model,'adminSearch'))
+        {
             $data1=$model->adminSearch();
-        else
+        } else {
             $data1=array();
+        }
 
         $url_prefix='Yii::app()->createUrl("yiiadmin/manageModel/';
 
@@ -154,6 +158,8 @@ class ManageModelController extends YAdminController
                 $title
         );
 
+        CVarDumper::dump($model, 3, true);
+        die('update');
         $this->render('create',array(
             'title'=>YiiadminModule::t( 'Редактировать').' '.$this->module->getObjectPluralName($model, 0),
             'model'=>$model,            
@@ -193,3 +199,4 @@ class ManageModelController extends YAdminController
             $this->redirect($this->createUrl('manageModel/update',array('model_name'=>$model_name,'pk'=>$pk)));
     }
 }
+// vim: set filetype=php expandtab tabstop=4 shiftwidth=4 autoindent smartindent:

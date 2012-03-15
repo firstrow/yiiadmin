@@ -59,4 +59,6 @@ $cs->registerCssFile($baseUrl.'/css/base.css');
     </div> 
 </body> 
 </html> 
- 
+<?php 
+// vim: set filetype=php expandtab tabstop=4 shiftwidth=4 autoindent smartindent:
+?> 
