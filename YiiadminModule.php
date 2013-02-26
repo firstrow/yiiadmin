@@ -157,6 +157,9 @@ class YiiadminModule extends CWebModule
                 return $form->checkBox($model,$attribute); 
             break;
 
+            case 'checkboxes':
+                return $form->checkBoxList($model,$attribute,$this->getAttributeChoices($attribute));
+
             default: 
                 return $form->textField($model,$attribute,array('class'=>'vTextField')); 
             break;
